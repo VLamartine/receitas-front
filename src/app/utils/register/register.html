@@ -1,0 +1,28 @@
+<mat-card class="w-3/5 m-auto">
+  <mat-card-header>Registrar</mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="registerForm">
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Nome</mat-label>
+        <input formControlName="name" matInput>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Email</mat-label>
+        <input formControlName="email" matInput>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Senha</mat-label>
+        <input formControlName="password" matInput type="password">
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Confirmar Senha</mat-label>
+        <input formControlName="confirmPassword" matInput type="password">
+      </mat-form-field>
+    </form>
+  </mat-card-content>
+  <mat-card-actions align="end">
+    <a matButton="text" routerLink="/entrar">Já tem uma conta? Entre</a>
+    <button (click)="register()" [disabled]="registerForm.invalid" color="primary" matButton="elevated">Cadastrar
+    </button>
+  </mat-card-actions>
+</mat-card>
