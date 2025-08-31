@@ -27,6 +27,9 @@
       ],
       "@services/*": [
         "src/app/services/*"
+      ],
+      "@interceptors/*": [
+        "./src/app/interceptors/*"
       ]
       //      "@shared/*": ["src/app/shared/*"],
       //      "@core/*": ["src/app/core/*"],

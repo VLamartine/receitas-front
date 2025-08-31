@@ -9,6 +9,9 @@
       <mat-form-field appearance="outline" class="w-full">
         <mat-label>Email</mat-label>
         <input formControlName="email" matInput>
+        @if (registerForm.get('email')?.hasError('server')) {
+          <mat-error> {{ registerForm.get('email')?.getError('server') }}</mat-error>
+        }
       </mat-form-field>
       <mat-form-field appearance="outline" class="w-full">
         <mat-label>Senha</mat-label>
@@ -19,6 +22,17 @@
         <input formControlName="confirmPassword" matInput type="password">
       </mat-form-field>
     </form>
+
+    <!--    @TODO: Style errors'-->
+    @if (registerForm.invalid && formErrors) {
+      <div>
+        <ul>
+          @for (error of formErrors; track $index) {
+            <li>{{ error }}</li>
+          }
+        </ul>
+      </div>
+    }
   </mat-card-content>
   <mat-card-actions align="end">
     <a matButton="text" routerLink="/entrar">Já tem uma conta? Entre</a>
