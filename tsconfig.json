@@ -30,6 +30,12 @@
       ],
       "@interceptors/*": [
         "./src/app/interceptors/*"
+      ],
+      "@modules/*": [
+        "./src/app/modules/*"
+      ],
+      "@guards/*": [
+        "./src/app/guards/*"
       ]
       //      "@shared/*": ["src/app/shared/*"],
       //      "@core/*": ["src/app/core/*"],

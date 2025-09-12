@@ -1,0 +1,25 @@
+@use '@angular/material' as mat;
+
+:host {
+  @include mat.toolbar-overrides((
+          container-background-color: var(--mat-sys-primary-container),
+          container-text-color: var(--mat-sys-primary),
+  ));
+}
+
+.logout-button {
+  @include mat.menu-overrides((
+          item-label-text-color: var(--mat-sys-error),
+  ));
+}
+
+.main-link {
+  @include mat.button-overrides((
+          text-container-shape: 0,
+          text-container-height: 1
+  ));
+
+  &.active {
+    background-color: var(--mat-sys-inverse-primary);
+  }
+}

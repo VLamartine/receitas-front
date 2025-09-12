@@ -11,9 +11,16 @@
         <input formControlName="password" matInput type="password">
       </mat-form-field>
     </form>
+
+    <!--    @TODO: Style errors-->
+    @if (unauthorized()) {
+      <div>
+        <p>Email ou senha incorretos</p>
+      </div>
+    }
   </mat-card-content>
   <mat-card-actions align="end">
-    <a matButton="text" routerLink="/registrar">Não tem uma conta? Registre-se</a>
+    <a matButton="text" routerLink="/register">Não tem uma conta? Registre-se</a>
     <button (click)="login()" [disabled]="loginForm.invalid" color="" matButton="elevated">Login</button>
   </mat-card-actions>
 </mat-card>

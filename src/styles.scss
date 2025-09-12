@@ -5,25 +5,25 @@
 
 @mixin dark-mode {
   @include mat.theme((
-    color: (
-      primary: darkTheme.$primary-palette,
-      tertiary: darkTheme.$tertiary-palette,
-      theme-type: dark
-    ),
-    typography: Roboto,
-    density: 0,
+          color: (
+                  primary: darkTheme.$primary-palette,
+                  tertiary: darkTheme.$tertiary-palette,
+                  theme-type: dark
+          ),
+          typography: Roboto,
+          density: 0,
   ))
 }
 
 @mixin light-mode {
   @include mat.theme((
-    color: (
-      primary: lightTheme.$primary-palette,
-      tertiary: lightTheme.$tertiary-palette,
-      theme-type: light
-    ),
-    typography: Roboto,
-    density: 0,
+          color: (
+                  primary: lightTheme.$primary-palette,
+                  tertiary: lightTheme.$tertiary-palette,
+                  theme-type: light
+          ),
+          typography: Roboto,
+          density: 0,
   ))
 }
 
@@ -32,7 +32,7 @@ html {
 }
 
 body {
-  background-color: var(--mat-sys-surface);
+  background-color: var(--mat-sys-background);
   color: var(--mat-sys-on-surface);
   font: var(--mat-sys-body-medium);
 
@@ -51,3 +51,8 @@ body.dark {
   border-right: none;
 }
 
+:root {
+  @include mat.button-overrides((
+          filled-container-shape: 8px,
+  ));
+}

@@ -1,1 +1,6 @@
-<app-auth-layout/>
+@if (authService.currentUser()) {
+  <app-app-layout />
+} @else {
+  <app-auth-layout />
+
+}

@@ -13,7 +13,7 @@ import { RouterLink } from "@angular/router";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { RegisterRequest } from "@customTypes/auth";
 import { Auth } from "@services/auth";
-import { FormErrors } from "@customTypes/formErrors";
+import { FormError } from "@customTypes/error";
 
 interface RegisterForm {
   name: FormControl<string>;
@@ -71,6 +71,8 @@ export class Register {
       this.registerForm
         .get("confirmPassword")
         ?.setErrors({ passwordMismatch: true });
+      this.formErrors.push("As senhas devem ser iguais");
+      this.registerForm.markAllAsTouched();
       return;
     }
 
@@ -81,11 +83,13 @@ export class Register {
       confirmPassword: this.registerForm.value.confirmPassword || "",
     };
 
+    this.formErrors = [];
+
     this.authService.register(body).subscribe({
       next: (r) => {
         console.log(r);
       },
-      error: (e: FormErrors) => {
+      error: (e: FormError) => {
         Object.keys(e).forEach((key) => {
           this.registerForm.get(key)?.setErrors({ invalid: true });
           this.formErrors.push(...e[key]);

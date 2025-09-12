@@ -1,8 +1,11 @@
 import { HttpErrorResponse } from "@angular/common/http";
-import { FormErrors } from "@customTypes/formErrors";
+import { FormError } from "@customTypes/error";
 
 const mapErrors = (error: HttpErrorResponse) => {
-  const formErrors: FormErrors = {};
+  const formErrors: FormError = {
+    error: error.error.error,
+    statusCode: error.error.statusCode,
+  };
   if (error.error.message) {
     error.error.message.forEach(
       ({ field, message }: { field: string; message: string }) => {

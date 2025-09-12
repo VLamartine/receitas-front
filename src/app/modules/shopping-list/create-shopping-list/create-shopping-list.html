@@ -1,0 +1,40 @@
+<h1>Criar nova lista de compras</h1>
+<form [formGroup]="shoppingListForm">
+  <mat-form-field appearance="outline" class="w-full">
+    <mat-label>Nome da Lista de Compras</mat-label>
+    <input formControlName="name" matInput>
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="w-full">
+    <mat-label>Descrição</mat-label>
+    <textarea matInput formControlName="name" class="resize-none!"> </textarea>
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="w-full">
+    <mat-label>Data de previsão de compra</mat-label>
+    <input matInput [min]="minDate" formControlName="plannedDate" [matDatepicker]="picker">
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+  <div formArrayName="items">
+    <h3>Items para comprar</h3>
+    @for (_items of items.controls; track $index; let i = $index) {
+      <div formGroupName="{{i}}">
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Nome do item</mat-label>
+          <input formControlName="name" matInput>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Quantidade do item</mat-label>
+          <input formControlName="quantity" matInput type="number">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Unidade</mat-label>
+          <input formControlName="unit" matInput>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Marca</mat-label>
+          <input formControlName="brand" matInput>
+        </mat-form-field>
+      </div>
+    }
+  </div>
+</form>

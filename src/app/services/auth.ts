@@ -1,10 +1,10 @@
-import { Injectable } from "@angular/core";
+import { computed, Injectable, signal } from "@angular/core";
 import {
   HttpClient,
   HttpContext,
   HttpErrorResponse,
 } from "@angular/common/http";
-import { RegisterRequest } from "@customTypes/auth";
+import { LoginRequest, RegisterRequest } from "@customTypes/auth";
 import { environment } from "@env/environment";
 import { catchError, tap } from "rxjs";
 import { User, UserLogin } from "@customTypes/user";
@@ -15,10 +15,28 @@ import mapErrors from "@utils/mapErrors";
 })
 export class Auth {
   private apiUrl = environment.apiUrl;
-  private currentUser: User | null = null;
-  constructor(private http: HttpClient) {}
+  private user = signal<User | null>(null);
 
-  login(_body: any) {}
+  public readonly currentUser = computed(() => this.user());
+
+  constructor(private http: HttpClient) {
+    this.checkLoggedUser();
+  }
+
+  login(body: LoginRequest) {
+    return this.http
+      .post<UserLogin>(`${this.apiUrl}/auth/login`, body, {
+        context: new HttpContext().set(ADD_AUTH_HEADER, false),
+      })
+      .pipe(
+        tap((res) => {
+          this.saveCurrentUser(res);
+        }),
+        catchError((error: HttpErrorResponse) => {
+          throw error.error;
+        }),
+      );
+  }
 
   register(body: RegisterRequest) {
     return this.http
@@ -35,10 +53,22 @@ export class Auth {
       );
   }
 
+  logout() {
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    this.user.set(null);
+  }
   saveCurrentUser = (user: UserLogin) => {
     const { token, ...userInfo } = user;
-    this.currentUser = userInfo;
+    this.user.set(userInfo);
     localStorage.setItem("user", JSON.stringify(userInfo));
     localStorage.setItem("token", token);
+  };
+
+  checkLoggedUser = () => {
+    const user = localStorage.getItem("user");
+    if (user) {
+      this.user.set(JSON.parse(user));
+    }
   };
 }

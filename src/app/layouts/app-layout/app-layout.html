@@ -1,0 +1,16 @@
+<mat-toolbar>
+  <span>Nome TBD</span>
+
+  <a mat-button class="main-link self-stretch h-full" routerLinkActive="active" routerLink="/shopping-list">Lista de
+    Compras</a>
+  <a mat-button class="main-link self-stretch h-full" routerLinkActive="active" routerLink="/recipes">Receitas</a>
+  <span class="flex-auto"></span>
+  <button matIconButton [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+    <mat-icon>account_circle</mat-icon>
+  </button>
+</mat-toolbar>
+<mat-menu #menu="matMenu">
+  <button mat-menu-item>Minha conta</button>
+  <button class="logout-button" mat-menu-item (click)="logout()">Sair</button>
+</mat-menu>
+<router-outlet />
