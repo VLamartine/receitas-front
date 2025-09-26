@@ -6,14 +6,14 @@ import {
 } from "@angular/common/http";
 import { LoginRequest, RegisterRequest } from "@customTypes/auth";
 import { environment } from "@env/environment";
-import { catchError, tap } from "rxjs";
+import { catchError, tap, throwError } from "rxjs";
 import { User, UserLogin } from "@customTypes/user";
 import { ADD_AUTH_HEADER } from "@interceptors/auth-interceptor";
 import mapErrors from "@utils/mapErrors";
 @Injectable({
   providedIn: "root",
 })
-export class Auth {
+export class AuthService {
   private apiUrl = environment.apiUrl;
   private user = signal<User | null>(null);
 
@@ -33,7 +33,7 @@ export class Auth {
           this.saveCurrentUser(res);
         }),
         catchError((error: HttpErrorResponse) => {
-          throw error.error;
+          return throwError(() => error.error);
         }),
       );
   }
@@ -48,7 +48,7 @@ export class Auth {
           this.saveCurrentUser(res);
         }),
         catchError((error: HttpErrorResponse) => {
-          throw mapErrors(error);
+          return throwError(() => mapErrors(error));
         }),
       );
   }

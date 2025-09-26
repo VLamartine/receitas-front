@@ -27,6 +27,9 @@
   ))
 }
 
+@theme {
+  --color-primary: var(--mat-sys-primary);
+}
 html {
   @include light-mode;
 }
@@ -54,5 +57,9 @@ body.dark {
 :root {
   @include mat.button-overrides((
           filled-container-shape: 8px,
+          protected-container-shape: 8px,
+          outlined-container-shape: 8px,
+          text-container-shape: 8px,
+          tonal-container-shape: 8px,
   ));
 }

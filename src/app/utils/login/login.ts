@@ -11,7 +11,7 @@ import { MatInputModule } from "@angular/material/input";
 import { MatButtonModule } from "@angular/material/button";
 import { MatCardModule } from "@angular/material/card";
 import { Router, RouterModule } from "@angular/router";
-import { Auth } from "@services/auth";
+import { AuthService } from "@services/auth";
 import { LoginRequest } from "@customTypes/auth";
 import { ErrorGeneric } from "@customTypes/error";
 import { HttpStatusCode } from "@angular/common/http";
@@ -37,7 +37,7 @@ export class Login {
   loginForm: FormGroup<LoginForm>;
   unauthorized = signal<boolean>(false);
   router = inject(Router);
-  authService = inject(Auth);
+  authService = inject(AuthService);
 
   constructor(private fb: NonNullableFormBuilder) {
     this.loginForm = this.fb.group({

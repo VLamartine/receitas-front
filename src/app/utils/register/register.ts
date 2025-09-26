@@ -12,7 +12,7 @@ import {
 import { RouterLink } from "@angular/router";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { RegisterRequest } from "@customTypes/auth";
-import { Auth } from "@services/auth";
+import { AuthService } from "@services/auth";
 import { FormError } from "@customTypes/error";
 
 interface RegisterForm {
@@ -41,7 +41,7 @@ export class Register {
 
   constructor(
     private fb: NonNullableFormBuilder,
-    private authService: Auth,
+    private authService: AuthService,
   ) {
     this.registerForm = this.fb.group({
       name: this.fb.control("", {

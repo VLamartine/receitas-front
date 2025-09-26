@@ -1,6 +1,6 @@
 import { Component, inject, signal } from "@angular/core";
 import { AuthLayout } from "./layouts/auth-layout/auth-layout";
-import { Auth } from "@services/auth";
+import { AuthService } from "@services/auth";
 import { AppLayout } from "./layouts/app-layout/app-layout";
 
 @Component({
@@ -11,5 +11,5 @@ import { AppLayout } from "./layouts/app-layout/app-layout";
 })
 export class App {
   protected readonly title = signal("frontend");
-  authService = inject(Auth);
+  authService = inject(AuthService);
 }

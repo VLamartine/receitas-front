@@ -4,7 +4,7 @@ import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
 import { MatMenuModule } from "@angular/material/menu";
-import { Auth } from "@services/auth";
+import { AuthService } from "@services/auth";
 
 @Component({
   selector: "app-app-layout",
@@ -14,13 +14,13 @@ import { Auth } from "@services/auth";
     MatButtonModule,
     MatIconModule,
     MatMenuModule,
-    RouterModule
+    RouterModule,
   ],
   templateUrl: "./app-layout.html",
   styleUrl: "./app-layout.scss",
 })
 export class AppLayout {
-  authService = inject(Auth);
+  authService = inject(AuthService);
   router = inject(Router);
 
   logout() {
