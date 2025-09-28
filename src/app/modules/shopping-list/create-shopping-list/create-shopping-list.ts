@@ -26,7 +26,10 @@ import { Unit } from "@customTypes/unit";
 import { debounceTime, distinctUntilChanged, forkJoin } from "rxjs";
 import { MatSelectModule } from "@angular/material/select";
 import { ProductService } from "@services/product";
-import { MatAutocompleteModule, MatAutocompleteSelectedEvent } from "@angular/material/autocomplete";
+import {
+  MatAutocompleteModule,
+  MatAutocompleteSelectedEvent,
+} from "@angular/material/autocomplete";
 import { Product } from "@customTypes/product";
 import { CreateShoppingListBody } from "@customTypes/shopping-list";
 import { ShoppingListService } from "@services/shopping-list";
@@ -53,7 +56,7 @@ interface ShoppingList {
     MatButtonModule,
     MatDatepickerModule,
     MatSelectModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
   ],
   templateUrl: "./create-shopping-list.html",
   styleUrl: "./create-shopping-list.scss",
@@ -135,7 +138,7 @@ export class CreateShoppingList implements OnInit, AfterViewInit {
 
   onProductSelected($event: MatAutocompleteSelectedEvent, index: number) {
     const selectedProduct = this.products.find(
-      (product) => product.id === $event.option.value
+      (product) => product.id === $event.option.value,
     );
     if (selectedProduct) {
       this.items.at(index).patchValue({
@@ -146,8 +149,8 @@ export class CreateShoppingList implements OnInit, AfterViewInit {
   }
   createShoppingList() {
     if (this.shoppingListForm.invalid) {
-      console.log('Form is invalid');
-      console.log(this.shoppingListForm.errors)
+      console.log("Form is invalid");
+      console.log(this.shoppingListForm.errors);
       return;
     }
     const body = this.mapFormToRequestBody();
@@ -156,14 +159,14 @@ export class CreateShoppingList implements OnInit, AfterViewInit {
         console.log(response);
       },
       error: console.log,
-    })
+    });
   }
 
   mapFormToRequestBody(): CreateShoppingListBody {
     const formValue = this.shoppingListForm.value;
     const body: CreateShoppingListBody = {} as CreateShoppingListBody;
     if (!formValue.name) {
-      throw new Error('Missing name');
+      throw new Error("Missing name");
     }
     body.name = formValue.name;
     body.description = formValue.description;
@@ -172,11 +175,11 @@ export class CreateShoppingList implements OnInit, AfterViewInit {
     body.shoppingListItems = this.items.value
       .filter((item: ShoppingListItem) => item.id)
       .map((item: ShoppingListItem) => ({
-      id: item.id,
-      name: item.name,
-      quantity: item.quantity,
-      unit: item.unit,
-    }));
+        id: item.id,
+        name: item.name,
+        quantity: item.quantity,
+        unit: item.unit,
+      }));
     return body;
   }
   get items() {

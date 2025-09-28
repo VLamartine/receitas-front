@@ -4,22 +4,24 @@
     <form [formGroup]="registerForm" class="flex flex-col gap-4">
       <mat-form-field appearance="outline" class="w-full">
         <mat-label>Nome</mat-label>
-        <input formControlName="name" matInput>
+        <input formControlName="name" matInput />
       </mat-form-field>
       <mat-form-field appearance="outline" class="w-full">
         <mat-label>Email</mat-label>
-        <input formControlName="email" matInput>
-        @if (registerForm.get('email')?.hasError('server')) {
-          <mat-error> {{ registerForm.get('email')?.getError('server') }}</mat-error>
+        <input formControlName="email" matInput />
+        @if (registerForm.get("email")?.hasError("server")) {
+          <mat-error>
+            {{ registerForm.get("email")?.getError("server") }}</mat-error
+          >
         }
       </mat-form-field>
       <mat-form-field appearance="outline" class="w-full">
         <mat-label>Senha</mat-label>
-        <input formControlName="password" matInput type="password">
+        <input formControlName="password" matInput type="password" />
       </mat-form-field>
       <mat-form-field appearance="outline" class="w-full">
         <mat-label>Confirmar Senha</mat-label>
-        <input formControlName="confirmPassword" matInput type="password">
+        <input formControlName="confirmPassword" matInput type="password" />
       </mat-form-field>
     </form>
 
@@ -36,7 +38,13 @@
   </mat-card-content>
   <mat-card-actions align="end">
     <a matButton="text" routerLink="/login">Já tem uma conta? Entre</a>
-    <button (click)="register()" [disabled]="registerForm.invalid" color="primary" matButton="elevated">Cadastrar
+    <button
+      (click)="register()"
+      [disabled]="registerForm.invalid"
+      color="primary"
+      matButton="elevated"
+    >
+      Cadastrar
     </button>
   </mat-card-actions>
 </mat-card>

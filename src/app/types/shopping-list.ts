@@ -1,5 +1,4 @@
-export interface ShoppingList {
-}
+export interface ShoppingList {}
 
 export interface CreateShoppingListItemBody {
   id: string;
@@ -13,5 +12,5 @@ export interface CreateShoppingListBody {
   description?: string;
   purchaseDate: Date | null;
 
-  shoppingListItems: CreateShoppingListItemBody[]
+  shoppingListItems: CreateShoppingListItemBody[];
 }

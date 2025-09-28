@@ -17,7 +17,7 @@ and accessible code following Angular and TypeScript best practices.
 - Do NOT use the `@HostBinding` and `@HostListener` decorators. Put host bindings inside the `host` object of the
   `@Component` or `@Directive` decorator instead
 - Use `NgOptimizedImage` for all static images.
-    - `NgOptimizedImage` does not work for inline base64 images.
+  - `NgOptimizedImage` does not work for inline base64 images.
 
 ## Components
 
@@ -72,15 +72,17 @@ and accessible code following Angular and TypeScript best practices.
 - **Avoid** using `mat.define-theme`, `mat.define-light-theme`, `mat.define-dark-theme` functions and `mat.core` mixin.
 
 ```scss
-@use '@angular/material' as mat;
+@use "@angular/material" as mat;
 
 html {
   color-scheme: light dark;
-  @include mat.theme((
-          color: mat.$blue-palette,
-          typography: Roboto,
-          density: 0
-  ));
+  @include mat.theme(
+    (
+      color: mat.$blue-palette,
+      typography: Roboto,
+      density: 0,
+    )
+  );
 }
 ```
 
@@ -92,10 +94,10 @@ html {
 ### 2. Imports & Tree Shaking
 
 - **Always import individual components and directives** directly from `@angular/material`.
-    ```ts
-    import { MatButton } from '@angular/material/button';
-    import { MatIcon } from '@angular/material/icon';
-    ```
+  ```ts
+  import { MatButton } from "@angular/material/button";
+  import { MatIcon } from "@angular/material/icon";
+  ```
 - **Avoid importing modules** such as `MatButtonModule` or `MatIconModule`. This ensures tree-shaking and smaller
   bundles.
 
@@ -104,10 +106,10 @@ html {
 ### 3. Buttons & Directives
 
 - **Use attribute selectors only** (e.g., `matButton`, `matIconButton`, `matFab`).
-    ```html
-    <button matButton="filled">Login</button>
-    <button matIconButton aria-label="Menu"><mat-icon>menu</mat-icon></button>
-    ```
+  ```html
+  <button matButton="filled">Login</button>
+  <button matIconButton aria-label="Menu"><mat-icon>menu</mat-icon></button>
+  ```
 - **Never use old element selectors** like `mat-button` or `mat-icon-button`.
 - **Always provide ARIA labels** for icon-only buttons.
 - **Do not add `color="primary"` attribute with component.** For example, don't do
@@ -125,11 +127,11 @@ html {
 
 ```css
 :host {
-    background: var(--mat-sys-surface-container);
-    color: var(--mat-sys-on-surface);
-    border: 1px solid var(--mat-sys-outline);
-    border-radius: var(--mat-sys-corner-medium);
-    box-shadow: var(--mat-sys-level1);
+  background: var(--mat-sys-surface-container);
+  color: var(--mat-sys-on-surface);
+  border: 1px solid var(--mat-sys-outline);
+  border-radius: var(--mat-sys-corner-medium);
+  box-shadow: var(--mat-sys-level1);
 }
 ```
 
@@ -160,29 +162,36 @@ See [Angular Material docs](https://material.angular.dev/guide/system-variables)
 ### 5. Customizing Themes and Components
 
 - **Use `mat.theme-overrides`** for context-specific (e.g., banners, admin areas) or branded sections:
-    ```scss
-    @use "@angular/material" as mat;
 
-    .success-banner {
-      @include mat.theme-overrides((
+  ```scss
+  @use "@angular/material" as mat;
+
+  .success-banner {
+    @include mat.theme-overrides(
+      (
         primary: mat.$green-palette,
         on-primary: #fff,
         outline: #b3e6b3,
-      ));
-    }
-    ```
-- **For component-level styling**, use `mat.<component>-overrides` mixins:
-    ```scss
-    @use "@angular/material" as mat;
+      )
+    );
+  }
+  ```
 
-    .highlighted-card {
-      @include mat.card-overrides((
+- **For component-level styling**, use `mat.<component>-overrides` mixins:
+
+  ```scss
+  @use "@angular/material" as mat;
+
+  .highlighted-card {
+    @include mat.card-overrides(
+      (
         elevated-container-color: var(--mat-sys-tertiary-container),
         elevated-container-shape: var(--mat-sys-corner-large),
         title-text-size: var(--mat-sys-headline-small),
-      ));
-    }
-    ```
+      )
+    );
+  }
+  ```
 
 ---
 
@@ -209,7 +218,7 @@ See [Angular Material docs](https://material.angular.dev/guide/system-variables)
 ## Quick Reference: Mixin Usage
 
 | Mixin                       | Use For                                            | How Often?    |
-|-----------------------------|----------------------------------------------------|---------------|
+| --------------------------- | -------------------------------------------------- | ------------- |
 | `mat.theme`                 | Global app theme                                   | Once, at root |
 | `mat.theme-overrides`       | Contextual/section-specific themes                 | As needed     |
 | `mat.<component>-overrides` | Fine-tuned, component-level appearance adjustments | As needed     |

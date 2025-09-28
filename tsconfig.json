@@ -16,27 +16,13 @@
     "module": "preserve",
     "baseUrl": ".",
     "paths": {
-      "@env/*": [
-        "src/environments/*"
-      ],
-      "@utils/*": [
-        "src/app/utils/*"
-      ],
-      "@customTypes/*": [
-        "src/app/types/*"
-      ],
-      "@services/*": [
-        "src/app/services/*"
-      ],
-      "@interceptors/*": [
-        "./src/app/interceptors/*"
-      ],
-      "@modules/*": [
-        "./src/app/modules/*"
-      ],
-      "@guards/*": [
-        "./src/app/guards/*"
-      ]
+      "@env/*": ["src/environments/*"],
+      "@utils/*": ["src/app/utils/*"],
+      "@customTypes/*": ["src/app/types/*"],
+      "@services/*": ["src/app/services/*"],
+      "@interceptors/*": ["./src/app/interceptors/*"],
+      "@modules/*": ["./src/app/modules/*"],
+      "@guards/*": ["./src/app/guards/*"]
       //      "@shared/*": ["src/app/shared/*"],
       //      "@core/*": ["src/app/core/*"],
       //      "@app/*": ["src/app/*"],

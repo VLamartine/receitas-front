@@ -4,11 +4,11 @@
     <form [formGroup]="loginForm" class="flex flex-col gap-4">
       <mat-form-field appearance="outline" class="w-full">
         <mat-label>Email</mat-label>
-        <input formControlName="email" matInput>
+        <input formControlName="email" matInput />
       </mat-form-field>
       <mat-form-field appearance="outline" class="w-full">
         <mat-label>Senha</mat-label>
-        <input formControlName="password" matInput type="password">
+        <input formControlName="password" matInput type="password" />
       </mat-form-field>
     </form>
 
@@ -20,7 +20,16 @@
     }
   </mat-card-content>
   <mat-card-actions align="end">
-    <a matButton="text" routerLink="/register">Não tem uma conta? Registre-se</a>
-    <button (click)="login()" [disabled]="loginForm.invalid" color="" matButton="elevated">Login</button>
+    <a matButton="text" routerLink="/register"
+      >Não tem uma conta? Registre-se</a
+    >
+    <button
+      (click)="login()"
+      [disabled]="loginForm.invalid"
+      color=""
+      matButton="elevated"
+    >
+      Login
+    </button>
   </mat-card-actions>
 </mat-card>

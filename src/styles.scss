@@ -1,30 +1,34 @@
-@use '@angular/material' as mat;
-@use 'tailwindcss';
-@use 'dark-theme' as darkTheme;
-@use 'light-theme' as lightTheme;
+@use "@angular/material" as mat;
+@use "tailwindcss";
+@use "dark-theme" as darkTheme;
+@use "light-theme" as lightTheme;
 
 @mixin dark-mode {
-  @include mat.theme((
-          color: (
-                  primary: darkTheme.$primary-palette,
-                  tertiary: darkTheme.$tertiary-palette,
-                  theme-type: dark
-          ),
-          typography: Roboto,
-          density: 0,
-  ))
+  @include mat.theme(
+    (
+      color: (
+        primary: darkTheme.$primary-palette,
+        tertiary: darkTheme.$tertiary-palette,
+        theme-type: dark,
+      ),
+      typography: Roboto,
+      density: 0,
+    )
+  );
 }
 
 @mixin light-mode {
-  @include mat.theme((
-          color: (
-                  primary: lightTheme.$primary-palette,
-                  tertiary: lightTheme.$tertiary-palette,
-                  theme-type: light
-          ),
-          typography: Roboto,
-          density: 0,
-  ))
+  @include mat.theme(
+    (
+      color: (
+        primary: lightTheme.$primary-palette,
+        tertiary: lightTheme.$tertiary-palette,
+        theme-type: light,
+      ),
+      typography: Roboto,
+      density: 0,
+    )
+  );
 }
 
 @theme {
@@ -42,7 +46,8 @@ body {
   margin: 0;
 }
 
-html, body {
+html,
+body {
   height: 100%;
 }
 
@@ -55,11 +60,13 @@ body.dark {
 }
 
 :root {
-  @include mat.button-overrides((
-          filled-container-shape: 8px,
-          protected-container-shape: 8px,
-          outlined-container-shape: 8px,
-          text-container-shape: 8px,
-          tonal-container-shape: 8px,
-  ));
+  @include mat.button-overrides(
+    (
+      filled-container-shape: 8px,
+      protected-container-shape: 8px,
+      outlined-container-shape: 8px,
+      text-container-shape: 8px,
+      tonal-container-shape: 8px,
+    )
+  );
 }
