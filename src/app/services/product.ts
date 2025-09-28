@@ -13,9 +13,9 @@ export class ProductService {
   private http = inject(HttpClient);
 
   getAll(options: Record<string, any>): Observable<ApiResponse<Product>> {
-    const params = new HttpParams();
+    let params = new HttpParams();
     if (options["searchTerm"]) {
-      params.set("searchTerm", options["searchTerm"]);
+      params = params.set("search", options["searchTerm"]);
     }
     return this.http.get<ApiResponse<Product>>(`${this.apiUrl}/product`, {
       params,

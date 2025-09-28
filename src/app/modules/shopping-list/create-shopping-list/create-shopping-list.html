@@ -2,7 +2,7 @@
   <h1 class="text-xl text-center text-primary">Criar nova lista de compras</h1>
   <form [formGroup]="shoppingListForm" class="flex flex-col gap-4" (ngSubmit)="createShoppingList()">
     <div class="flex flex-col md:flex-row gap-4">
-      <mat-form-field appearance="outline" class="w-full md:basis-4/5">
+      <mat-form-field appearance="outline" class="w-full md:basis-4/5 md:grow">
         <mat-label>Nome da Lista de Compras</mat-label>
         <input formControlName="name" matInput>
       </mat-form-field>
@@ -21,9 +21,15 @@
       <h3 class="text-lg text-center text-primary">Items para comprar</h3>
       @for (_items of items.controls; track _items; let i = $index) {
         <div [formGroupName]="i" #listItem class="flex flex-col md:flex-row gap-4">
-          <mat-form-field appearance="outline" class="w-full">
-            <mat-label>Nome do item</mat-label>
-            <input formControlName="name" matInput>
+          <mat-form-field class="w-full">
+            <mat-label>Item</mat-label>
+            <input formControlName="name" matInput [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onProductSelected($event, i)">
+
+              @for (product of products; track product.id) {
+                <mat-option [value]="product.id">{{ product.name }}</mat-option>
+              }
+            </mat-autocomplete>
           </mat-form-field>
           <div class="flex gap-4">
             <mat-form-field appearance="outline" class="basis-1/5">

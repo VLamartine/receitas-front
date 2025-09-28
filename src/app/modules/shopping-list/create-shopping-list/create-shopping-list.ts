@@ -26,8 +26,12 @@ import { Unit } from "@customTypes/unit";
 import { debounceTime, distinctUntilChanged, forkJoin } from "rxjs";
 import { MatSelectModule } from "@angular/material/select";
 import { ProductService } from "@services/product";
+import { MatAutocompleteModule, MatAutocompleteSelectedEvent } from "@angular/material/autocomplete";
+import { Product } from "@customTypes/product";
+import { CreateShoppingListBody } from "@customTypes/shopping-list";
 
 interface ShoppingListItem {
+  id: FormControl<string | null>;
   name: FormControl<string>;
   quantity: FormControl<number>;
   unit: FormControl<string>;
@@ -48,6 +52,7 @@ interface ShoppingList {
     MatButtonModule,
     MatDatepickerModule,
     MatSelectModule,
+    MatAutocompleteModule
   ],
   templateUrl: "./create-shopping-list.html",
   styleUrl: "./create-shopping-list.scss",
@@ -60,6 +65,8 @@ export class CreateShoppingList implements OnInit, AfterViewInit {
   private readonly productsService = inject(ProductService);
 
   units: Unit[] = [];
+  products: Product[] = [];
+
   readonly minDate = new Date();
 
   shoppingListForm = this.fb.group<ShoppingList>({
@@ -92,13 +99,13 @@ export class CreateShoppingList implements OnInit, AfterViewInit {
 
   addItem() {
     const newControl = this.fb.group<ShoppingListItem>({
+      id: this.fb.control(null),
       name: this.fb.control("", { validators: [Validators.required] }),
       quantity: this.fb.control(1, {
         validators: [Validators.required, Validators.min(1)],
       }),
       unit: this.fb.control("", { validators: [Validators.required] }), // Unidades: g, kg, l, ml, unidades, etc.
     });
-    const index = this.items.length;
 
     newControl.valueChanges
       .pipe(
@@ -118,14 +125,52 @@ export class CreateShoppingList implements OnInit, AfterViewInit {
   searchProducts(searchTerm: string) {
     this.productsService.getAll({ searchTerm: searchTerm }).subscribe({
       next: (response) => {
-        console.log(response);
+        this.products = response.data;
       },
       error: console.log,
     });
   }
 
+  onProductSelected($event: MatAutocompleteSelectedEvent, index: number) {
+    const selectedProduct = this.products.find(
+      (product) => product.id === $event.option.value
+    );
+    if (selectedProduct) {
+      this.items.at(index).patchValue({
+        id: $event.option.value,
+        name: selectedProduct.name,
+      });
+    }
+  }
   createShoppingList() {
-    console.log(this.shoppingListForm.value);
+    if (this.shoppingListForm.invalid) {
+      console.log('Form is invalid');
+      console.log(this.shoppingListForm.errors)
+      return;
+    }
+    const body = this.mapFormToRequestBody();
+    console.log(body);
+  }
+
+  mapFormToRequestBody(): CreateShoppingListBody {
+    const formValue = this.shoppingListForm.value;
+    const body: CreateShoppingListBody = {} as CreateShoppingListBody;
+    if (!formValue.name) {
+      throw new Error('Missing name');
+    }
+    body.name = formValue.name;
+    body.description = formValue.description;
+    body.plannedDate = formValue.plannedDate ?? null;
+
+    body.items = this.items.value
+      .filter((item: ShoppingListItem) => item.id)
+      .map((item: ShoppingListItem) => ({
+      id: item.id,
+      name: item.name,
+      quantity: item.quantity,
+      unit: item.unit,
+    }));
+    return body;
   }
   get items() {
     return this.shoppingListForm.get("items") as FormArray;
