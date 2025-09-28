@@ -13,5 +13,5 @@ export interface CreateShoppingListBody {
   description?: string;
   purchaseDate: Date | null;
 
-  items: CreateShoppingListItemBody[]
+  shoppingListItems: CreateShoppingListItemBody[]
 }

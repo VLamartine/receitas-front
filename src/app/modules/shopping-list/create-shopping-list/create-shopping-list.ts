@@ -29,6 +29,7 @@ import { ProductService } from "@services/product";
 import { MatAutocompleteModule, MatAutocompleteSelectedEvent } from "@angular/material/autocomplete";
 import { Product } from "@customTypes/product";
 import { CreateShoppingListBody } from "@customTypes/shopping-list";
+import { ShoppingListService } from "@services/shopping-list";
 
 interface ShoppingListItem {
   id: FormControl<string | null>;
@@ -63,6 +64,7 @@ export class CreateShoppingList implements OnInit, AfterViewInit {
   private readonly destroyRef = inject(DestroyRef);
   private readonly unitsService = inject(UnitsService);
   private readonly productsService = inject(ProductService);
+  private readonly shoppingListService = inject(ShoppingListService);
 
   units: Unit[] = [];
   products: Product[] = [];
@@ -107,15 +109,15 @@ export class CreateShoppingList implements OnInit, AfterViewInit {
       unit: this.fb.control("", { validators: [Validators.required] }), // Unidades: g, kg, l, ml, unidades, etc.
     });
 
-    newControl.valueChanges
+    newControl.controls.name.valueChanges
       .pipe(
         debounceTime(500),
         distinctUntilChanged(),
         takeUntilDestroyed(this.destroyRef),
       )
       .subscribe((value) => {
-        if (!value.name) return;
-        this.searchProducts(value.name);
+        if (!value) return;
+        this.searchProducts(value);
       });
     this.items.push(newControl);
 
@@ -149,7 +151,12 @@ export class CreateShoppingList implements OnInit, AfterViewInit {
       return;
     }
     const body = this.mapFormToRequestBody();
-    console.log(body);
+    this.shoppingListService.create(body).subscribe({
+      next: (response) => {
+        console.log(response);
+      },
+      error: console.log,
+    })
   }
 
   mapFormToRequestBody(): CreateShoppingListBody {
@@ -160,9 +167,9 @@ export class CreateShoppingList implements OnInit, AfterViewInit {
     }
     body.name = formValue.name;
     body.description = formValue.description;
-    body.plannedDate = formValue.plannedDate ?? null;
+    body.purchaseDate = formValue.plannedDate ?? null;
 
-    body.items = this.items.value
+    body.shoppingListItems = this.items.value
       .filter((item: ShoppingListItem) => item.id)
       .map((item: ShoppingListItem) => ({
       id: item.id,

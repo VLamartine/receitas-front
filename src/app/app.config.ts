@@ -12,6 +12,7 @@ import { provideDateFnsAdapter } from "@angular/material-date-fns-adapter";
 import { ptBR } from "date-fns/locale";
 import { MAT_DATE_LOCALE } from "@angular/material/core";
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from "@angular/material/form-field";
+import { errorInterceptor } from "@interceptors/error-interceptor";
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -20,7 +21,7 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideHttpClient(withInterceptors([authInterceptor])),
+    provideHttpClient(withInterceptors([authInterceptor, errorInterceptor])),
     {
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
       useValue: { appearance: "outline", subscriptSizing: "dynamic" },
