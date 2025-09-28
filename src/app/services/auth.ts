@@ -1,4 +1,4 @@
-import { computed, Injectable, signal } from "@angular/core";
+import { computed, inject, Injectable, signal } from "@angular/core";
 import {
   HttpClient,
   HttpContext,
@@ -18,8 +18,8 @@ export class AuthService {
   private user = signal<User | null>(null);
 
   public readonly currentUser = computed(() => this.user());
-
-  constructor(private http: HttpClient) {
+  private readonly http = inject(HttpClient);
+  constructor() {
     this.checkLoggedUser();
   }
 
@@ -31,9 +31,6 @@ export class AuthService {
       .pipe(
         tap((res) => {
           this.saveCurrentUser(res);
-        }),
-        catchError((error: HttpErrorResponse) => {
-          return throwError(() => error.error);
         }),
       );
   }
