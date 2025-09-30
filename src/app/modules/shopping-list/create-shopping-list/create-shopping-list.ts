@@ -1,5 +1,4 @@
 import {
-  AfterViewInit,
   Component,
   DestroyRef,
   ElementRef,
@@ -33,6 +32,8 @@ import {
 import { Product } from "@customTypes/product";
 import { CreateShoppingListBody } from "@customTypes/shopping-list";
 import { ShoppingListService } from "@services/shopping-list";
+import { Router } from "@angular/router";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 interface ShoppingListItem {
   id: FormControl<string | null>;
@@ -61,14 +62,15 @@ interface ShoppingList {
   templateUrl: "./create-shopping-list.html",
   styleUrl: "./create-shopping-list.scss",
 })
-export class CreateShoppingList implements OnInit, AfterViewInit {
+export class CreateShoppingList implements OnInit {
   @ViewChildren("listItem") listItems!: QueryList<ElementRef>;
   private readonly fb = inject(NonNullableFormBuilder);
   private readonly destroyRef = inject(DestroyRef);
   private readonly unitsService = inject(UnitsService);
   private readonly productsService = inject(ProductService);
   private readonly shoppingListService = inject(ShoppingListService);
-
+  private readonly router = inject(Router);
+  private readonly snackBar = inject(MatSnackBar);
   units: Unit[] = [];
   products: Product[] = [];
 
@@ -89,17 +91,6 @@ export class CreateShoppingList implements OnInit, AfterViewInit {
         this.units = units.data;
       },
     });
-  }
-
-  ngAfterViewInit() {
-    this.listItems.changes
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((listItems) => {
-        if (this.listItems && this.listItems.last) {
-          const lastElement = this.listItems.last.nativeElement;
-          lastElement.scrollIntoView({ behavior: "smooth" });
-        }
-      });
   }
 
   addItem() {
@@ -155,8 +146,11 @@ export class CreateShoppingList implements OnInit, AfterViewInit {
     }
     const body = this.mapFormToRequestBody();
     this.shoppingListService.create(body).subscribe({
-      next: (response) => {
-        console.log(response);
+      next: (_response) => {
+        this.snackBar.open("Lista de compras criada com sucesso", "", {
+          duration: 3000,
+        });
+        this.router.navigate(["/shopping-list"]).then();
       },
       error: console.log,
     });
@@ -168,14 +162,15 @@ export class CreateShoppingList implements OnInit, AfterViewInit {
     if (!formValue.name) {
       throw new Error("Missing name");
     }
+
     body.name = formValue.name;
-    body.description = formValue.description;
+    body.description = formValue.description ?? null;
     body.purchaseDate = formValue.plannedDate ?? null;
 
     body.shoppingListItems = this.items.value
       .filter((item: ShoppingListItem) => item.id)
       .map((item: ShoppingListItem) => ({
-        id: item.id,
+        productId: item.id,
         name: item.name,
         quantity: item.quantity,
         unit: item.unit,

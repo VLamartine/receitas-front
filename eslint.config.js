@@ -32,6 +32,7 @@ module.exports = tsEslint.config(
           style: "kebab-case",
         },
       ],
+      "@typescript-eslint/no-unused-vars": ["error", { ignorePattern: "^_" }],
     },
   },
   {
