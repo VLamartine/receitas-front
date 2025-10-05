@@ -18,14 +18,14 @@ export interface ShoppingList {
   userId: string;
   createdAt: Date;
   updatedAt: Date;
-  shoppingListItems: ShoppingListItem[];
+  items?: ShoppingListItem[];
 }
 
 export interface CreateShoppingListItemBody {
   productId: string;
   name: string;
   quantity: number;
-  unit: string;
+  unitId: string;
 }
 
 export interface CreateShoppingListBody {
@@ -33,7 +33,7 @@ export interface CreateShoppingListBody {
   description: string | null;
   purchaseDate: Date | null;
 
-  shoppingListItems: CreateShoppingListItemBody[];
+  items: CreateShoppingListItemBody[];
 }
 
 export interface ShoppingListFetch extends ApiRequestOptions {

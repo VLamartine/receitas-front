@@ -7,9 +7,11 @@ import {
 import { LoginRequest, RegisterRequest } from "@customTypes/auth";
 import { environment } from "@env/environment";
 import { catchError, tap, throwError } from "rxjs";
-import { User, UserLogin } from "@customTypes/user";
+import { User, UserLoginResponse } from "@customTypes/user";
 import { ADD_AUTH_HEADER } from "@interceptors/auth-interceptor";
 import mapErrors from "@utils/mapErrors";
+import { ApiResponse } from "@customTypes/api-response";
+
 @Injectable({
   providedIn: "root",
 })
@@ -25,24 +27,34 @@ export class AuthService {
 
   login(body: LoginRequest) {
     return this.http
-      .post<UserLogin>(`${this.apiUrl}/auth/login`, body, {
+      .post<ApiResponse<UserLoginResponse>>(`${this.apiUrl}/login`, body, {
         context: new HttpContext().set(ADD_AUTH_HEADER, false),
       })
       .pipe(
         tap((res) => {
-          this.saveCurrentUser(res);
+          if (!res.success || !res.data) {
+            throw new HttpErrorResponse({
+              error: "Erro ao fazer login",
+            });
+          }
+          this.saveCurrentUser(res.data);
         }),
       );
   }
 
   register(body: RegisterRequest) {
     return this.http
-      .post<UserLogin>(`${this.apiUrl}/user`, body, {
+      .post<ApiResponse<UserLoginResponse>>(`${this.apiUrl}/register`, body, {
         context: new HttpContext().set(ADD_AUTH_HEADER, false),
       })
       .pipe(
         tap((res) => {
-          this.saveCurrentUser(res);
+          if (!res.success || !res.data) {
+            throw new HttpErrorResponse({
+              error: "Erro ao fazer login",
+            });
+          }
+          this.saveCurrentUser(res.data);
         }),
         catchError((error: HttpErrorResponse) => {
           return throwError(() => mapErrors(error));
@@ -55,8 +67,9 @@ export class AuthService {
     localStorage.removeItem("token");
     this.user.set(null);
   }
-  saveCurrentUser = (user: UserLogin) => {
-    const { token, ...userInfo } = user;
+  saveCurrentUser = (user: UserLoginResponse) => {
+    console.log(user);
+    const { token, user: userInfo } = user;
     this.user.set(userInfo);
     localStorage.setItem("user", JSON.stringify(userInfo));
     localStorage.setItem("token", token);

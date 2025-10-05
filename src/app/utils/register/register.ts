@@ -80,7 +80,7 @@ export class Register {
       name: this.registerForm.value.name || "",
       email: this.registerForm.value.email || "",
       password: this.registerForm.value.password || "",
-      confirmPassword: this.registerForm.value.confirmPassword || "",
+      passwordConfirmation: this.registerForm.value.confirmPassword || "",
     };
 
     this.formErrors = [];

@@ -12,12 +12,12 @@ export class ProductService {
   private apiUrl = environment.apiUrl;
   private http = inject(HttpClient);
 
-  getAll(options: Record<string, any>): Observable<ApiResponse<Product>> {
+  getAll(options: Record<string, any>): Observable<ApiResponse<Product[]>> {
     let params = new HttpParams();
     if (options["searchTerm"]) {
-      params = params.set("search", options["searchTerm"]);
+      params = params.set("name", options["searchTerm"]);
     }
-    return this.http.get<ApiResponse<Product>>(`${this.apiUrl}/product`, {
+    return this.http.get<ApiResponse<Product[]>>(`${this.apiUrl}/products`, {
       params,
     });
   }

@@ -16,8 +16,11 @@ export class ShoppingListService {
   private apiUrl = environment.apiUrl;
   private http = inject(HttpClient);
 
-  create(body: CreateShoppingListBody): Observable<ShoppingList> {
-    return this.http.post<ShoppingList>(`${this.apiUrl}/shopping-list`, body);
+  create(body: CreateShoppingListBody): Observable<ApiResponse<ShoppingList>> {
+    return this.http.post<ApiResponse<ShoppingList>>(
+      `${this.apiUrl}/shopping-lists`,
+      body,
+    );
   }
 
   getShoppingLists(

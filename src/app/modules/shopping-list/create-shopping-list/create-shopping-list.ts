@@ -88,7 +88,7 @@ export class CreateShoppingList implements OnInit {
 
     forkJoin([this.unitsService.getAll()]).subscribe({
       next: ([units]) => {
-        this.units = units.data;
+        this.units = units.data ?? [];
       },
     });
   }
@@ -121,7 +121,7 @@ export class CreateShoppingList implements OnInit {
   searchProducts(searchTerm: string) {
     this.productsService.getAll({ searchTerm: searchTerm }).subscribe({
       next: (response) => {
-        this.products = response.data;
+        this.products = response.data ?? [];
       },
       error: console.log,
     });
@@ -167,13 +167,13 @@ export class CreateShoppingList implements OnInit {
     body.description = formValue.description ?? null;
     body.purchaseDate = formValue.plannedDate ?? null;
 
-    body.shoppingListItems = this.items.value
+    body.items = this.items.value
       .filter((item: ShoppingListItem) => item.id)
       .map((item: ShoppingListItem) => ({
         productId: item.id,
         name: item.name,
         quantity: item.quantity,
-        unit: item.unit,
+        unitId: item.unit,
       }));
     return body;
   }
