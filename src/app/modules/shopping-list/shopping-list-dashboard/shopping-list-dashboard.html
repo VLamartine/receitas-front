@@ -1,12 +1,47 @@
-<h1>Listas de compras</h1>
-<div>
-  <a matButton="filled" routerLink="/shopping-list/new"
+<div class="w-9/10 mx-auto mt-4 ">
+
+  <div class="flex flex-col md:flex-row gap-4 justify-between md:justify-start items-center mb-4">
+
+    <h1 class="text-4xl grow text-center mat-headline-1">Listas de compras</h1>
+    <a matButton="filled" routerLink="/shopping-list/new" class="md:self-end"
     >Nova lista de compras</a
-  >
-</div>
-<div>
-  <h4>Próximas compras</h4>
-</div>
-<div>
-  <h4>Últimas compras</h4>
+    >
+  </div>
+  <div class="mb-8">
+    <h1 class="text-2xl pb-4">Próximas compras</h1>
+    @for (shoppingList of (futureLists$ | async)?.data; track shoppingList.id; let last = $last) {
+      <div class="flex gap-2 text-lg md:text-xl my-3">
+        <a mat-list-item [routerLink]="['/shopping-list', shoppingList.id]" class="grow">
+          {{ shoppingList.name }}
+        </a>
+        <span class="">
+            {{ shoppingList.purchaseDate | date: "dd/MM/yyyy" }}
+          </span>
+      </div>
+      @if (!last) {
+        <mat-divider></mat-divider>
+      }
+    } @empty {
+      <p class="text-lg md:text-xl">Nenhuma lista de compras encontrada</p>
+    }
+  </div>
+  <mat-divider class="list-divider"></mat-divider>
+  <div class="mt-8">
+    <h1 class="text-2xl pb-4">Últimas Compras</h1>
+    @for (shoppingList of (pastLists$ | async)?.data; track shoppingList.id; let last = $last) {
+      <div class="flex gap-2 text-lg md:text-xl my-3">
+        <a mat-list-item [routerLink]="['/shopping-list', shoppingList.id]" class="grow">
+          {{ shoppingList.name }}
+        </a>
+        <span class="">
+            {{ shoppingList.purchaseDate | date: "dd/MM/yyyy" }}
+          </span>
+      </div>
+      @if (!last) {
+        <mat-divider></mat-divider>
+      }
+    } @empty {
+      <p class="text-lg md:text-xl">Nenhuma lista de compras encontrada</p>
+    }
+  </div>
 </div>

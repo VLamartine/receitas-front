@@ -1,1 +1,9 @@
 @use "@angular/material" as mat;
+
+
+.list-divider {
+  @include mat.divider-overrides((
+          color: var(--mat-sys-primary),
+          width: 4px
+  ))
+}

@@ -25,7 +25,7 @@ export class ShoppingListService {
 
   getShoppingLists(
     options: ShoppingListFetch = {} as ShoppingListFetch,
-  ): Observable<ApiResponse<ShoppingList>> {
+  ): Observable<ApiResponse<ShoppingList[]>> {
     const params = new HttpParams({
       fromObject: {
         page: options.page ?? 1,
@@ -33,8 +33,8 @@ export class ShoppingListService {
         fetch: options.fetch ?? "all",
       },
     });
-    return this.http.get<ApiResponse<ShoppingList>>(
-      `${this.apiUrl}/shopping-list`,
+    return this.http.get<ApiResponse<ShoppingList[]>>(
+      `${this.apiUrl}/shopping-lists`,
       { params },
     );
   }

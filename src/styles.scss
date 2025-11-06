@@ -3,37 +3,60 @@
 @use "dark-theme" as darkTheme;
 @use "light-theme" as lightTheme;
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
 @mixin dark-mode {
   @include mat.theme(
-    (
-      color: (
-        primary: darkTheme.$primary-palette,
-        tertiary: darkTheme.$tertiary-palette,
-        theme-type: dark,
-      ),
-      typography: Roboto,
-      density: 0,
-    )
+                  (
+                          color: (
+                                  primary: darkTheme.$primary-palette,
+                                  tertiary: darkTheme.$tertiary-palette,
+                                  theme-type: dark,
+                          ),
+                          typography: (
+                                  plain-family: Inter,
+                                  brand-family: Playfair Display,
+                                  bold-weight: 900,
+                                  medium-weight: 500,
+                                  regular-weight: 300,
+                          ),
+                          density: 0,
+                  )
   );
 }
 
 @mixin light-mode {
   @include mat.theme(
-    (
-      color: (
-        primary: lightTheme.$primary-palette,
-        tertiary: lightTheme.$tertiary-palette,
-        theme-type: light,
-      ),
-      typography: Roboto,
-      density: 0,
-    )
+                  (
+                          color: (
+                                  primary: lightTheme.$primary-palette,
+                                  tertiary: lightTheme.$tertiary-palette,
+                                  theme-type: light,
+                          ),
+                          typography: (
+                                  plain-family: Inter,
+                                  brand-family: Playfair Display,
+                                  bold-weight: 900,
+                                  medium-weight: 500,
+                                  regular-weight: 300,
+                          ),
+                          density: 0,
+                  )
   );
 }
 
 @theme {
   --color-primary: var(--mat-sys-primary);
+  --font-title: var(--mat-sys-headline-large-font);
+  --font-body: var(--mat-sys-body-medium-font);
 }
+
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-title;
+  }
+}
+
 html {
   @include light-mode;
 }
@@ -61,12 +84,12 @@ body.dark {
 
 :root {
   @include mat.button-overrides(
-    (
-      filled-container-shape: 8px,
-      protected-container-shape: 8px,
-      outlined-container-shape: 8px,
-      text-container-shape: 8px,
-      tonal-container-shape: 8px,
-    )
+                  (
+                          filled-container-shape: 8px,
+                          protected-container-shape: 8px,
+                          outlined-container-shape: 8px,
+                          text-container-shape: 8px,
+                          tonal-container-shape: 8px,
+                  )
   );
 }
