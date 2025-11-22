@@ -2,13 +2,13 @@
 
   <div class="flex flex-col md:flex-row gap-4 justify-between md:justify-start items-center mb-4">
 
-    <h1 class="text-4xl grow text-center mat-headline-1">Listas de compras</h1>
+    <h3 class="grow text-center mat-headline-1">Listas de compras</h3>
     <a matButton="filled" routerLink="/shopping-list/new" class="md:self-end"
     >Nova lista de compras</a
     >
   </div>
   <div class="mb-8">
-    <h1 class="text-2xl pb-4">Próximas compras</h1>
+    <h4 class="pb-4">Próximas compras</h4>
     @for (shoppingList of (futureLists$ | async)?.data; track shoppingList.id; let last = $last) {
       <div class="flex gap-2 text-lg md:text-xl my-3">
         <a mat-list-item [routerLink]="['/shopping-list', shoppingList.id]" class="grow">
@@ -27,7 +27,7 @@
   </div>
   <mat-divider class="list-divider"></mat-divider>
   <div class="mt-8">
-    <h1 class="text-2xl pb-4">Últimas Compras</h1>
+    <h4 class="pb-4">Últimas Compras</h4>
     @for (shoppingList of (pastLists$ | async)?.data; track shoppingList.id; let last = $last) {
       <div class="flex gap-2 text-lg md:text-xl my-3">
         <a mat-list-item [routerLink]="['/shopping-list', shoppingList.id]" class="grow">

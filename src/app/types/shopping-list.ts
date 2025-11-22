@@ -1,11 +1,13 @@
 import { ApiRequestOptions } from "@customTypes/api-request-options";
 
 export interface ShoppingListItem {
-  id?: string;
-  shoppingListId: string;
-  productId: string;
+  id: string;
+  name: string;
+  image?: string | null;
   quantity: number;
+  shoppingListId: string;
   unitId: string;
+  unitName: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -18,7 +20,7 @@ export interface ShoppingList {
   userId: string;
   createdAt: Date;
   updatedAt: Date;
-  items?: ShoppingListItem[];
+  products?: ShoppingListItem[];
 }
 
 export interface CreateShoppingListItemBody {
@@ -34,6 +36,10 @@ export interface CreateShoppingListBody {
   purchaseDate: Date | null;
 
   items: CreateShoppingListItemBody[];
+}
+
+export interface UpdateShoppingListBody extends CreateShoppingListBody {
+  id: string;
 }
 
 export interface ShoppingListFetch extends ApiRequestOptions {

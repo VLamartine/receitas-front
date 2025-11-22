@@ -10,3 +10,4 @@
 - [ ] Melhorar resposta da busca por produtos no form de lista de compras
 - [ ] Adicionar mensagens de sucesso/erro no cadastro de lista de compras
 - [ ] Adicionar botão de voltar/cancelar na tela de criar lista de compras
+- [ ] Adicionar erro ao recuperar lista de compras para editar/visualizar 

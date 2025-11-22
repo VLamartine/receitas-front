@@ -7,6 +7,7 @@ import {
   CreateShoppingListBody,
   ShoppingList,
   ShoppingListFetch,
+  UpdateShoppingListBody,
 } from "@customTypes/shopping-list";
 
 @Injectable({
@@ -36,6 +37,22 @@ export class ShoppingListService {
     return this.http.get<ApiResponse<ShoppingList[]>>(
       `${this.apiUrl}/shopping-lists`,
       { params },
+    );
+  }
+
+  getShoppingList(id: string): Observable<ApiResponse<ShoppingList>> {
+    return this.http.get<ApiResponse<ShoppingList>>(
+      `${this.apiUrl}/shopping-lists/${id}`,
+    );
+  }
+
+  updateShoppingList(
+    id: string,
+    body: UpdateShoppingListBody,
+  ): Observable<ApiResponse<ShoppingList>> {
+    return this.http.put<ApiResponse<ShoppingList>>(
+      `${this.apiUrl}/shopping-lists/${id}`,
+      body,
     );
   }
 }

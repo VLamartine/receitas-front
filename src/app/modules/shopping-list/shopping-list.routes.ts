@@ -16,4 +16,11 @@ export const routes: Routes = [
         (m) => m.CreateShoppingList,
       ),
   },
+  {
+    path: ":id",
+    loadComponent: () =>
+      import("./create-shopping-list/create-shopping-list").then(
+        (m) => m.CreateShoppingList,
+      ),
+  },
 ];

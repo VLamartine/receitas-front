@@ -55,6 +55,30 @@
   h1, h2, h3, h4, h5, h6 {
     @apply font-title;
   }
+
+  h1 {
+    @apply text-5xl text-primary;
+  }
+
+  h2 {
+    @apply text-4xl text-primary;
+  }
+
+  h3 {
+    @apply text-3xl text-primary;
+  }
+
+  h4 {
+    @apply text-2xl text-primary;
+  }
+
+  h5 {
+    @apply text-xl text-primary;
+  }
+
+  h6 {
+    @apply text-lg text-primary;
+  }
 }
 
 html {

@@ -1,5 +1,5 @@
 <div class="flex flex-col gap-4 pt-4 w-9/10 mx-auto">
-  <h1 class="text-xl text-center text-primary">Criar nova lista de compras</h1>
+  <h3 class="text-center text-primary">Criar nova lista de compras</h3>
   <form
     [formGroup]="shoppingListForm"
     class="flex flex-col gap-4"
@@ -32,13 +32,18 @@
       </textarea>
     </mat-form-field>
     <div formArrayName="items" class="flex flex-col gap-4">
-      <h3 class="text-lg text-center text-primary">Items para comprar</h3>
+      <h4 class="text-center text-primary">Items para comprar</h4>
       @for (_items of items.controls; track _items; let i = $index) {
         <div
           [formGroupName]="i"
           #listItem
-          class="flex flex-col md:flex-row gap-4"
+          class="relative flex flex-col md:flex-row gap-4 md:items-center mb-6 mt-2"
         >
+          <button type="button" matIconButton class="delete-button self-end md:hidden! inline-block!"
+                  (click)="removeItem(i)">
+            <mat-icon>delete</mat-icon>
+          </button>
+
           <mat-form-field class="w-full">
             <mat-label>Item</mat-label>
             <input formControlName="name" matInput [matAutocomplete]="auto" />
@@ -65,6 +70,10 @@
               </mat-select>
             </mat-form-field>
           </div>
+          <button type="button" matIconButton class="delete-button hidden! md:inline-block!"
+                  (click)="removeItem(i)">
+            <mat-icon>delete</mat-icon>
+          </button>
         </div>
         <div class="border-b border-gray-500"></div>
       }
@@ -77,8 +86,8 @@
         Adicionar Item
       </button>
     </div>
-    <button type="submit" matButton="filled" color="primary">
-      Criar lista de compras
+    <button type="submit" matButton="filled" color="primary" class="w-full md:w-fit md:self-end">
+      Salvar lista de compras
     </button>
   </form>
 </div>
