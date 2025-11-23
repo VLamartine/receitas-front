@@ -15,7 +15,7 @@
           {{ shoppingList.name }}
         </a>
         <span class="">
-            {{ shoppingList.purchaseDate | date: "dd/MM/yyyy" }}
+            {{ shoppingList.purchaseDate | date: "dd/MM/yyyy" : 'UTC' }}
           </span>
       </div>
       @if (!last) {
@@ -34,7 +34,7 @@
           {{ shoppingList.name }}
         </a>
         <span class="">
-            {{ shoppingList.purchaseDate | date: "dd/MM/yyyy" }}
+            {{ shoppingList.purchaseDate | date: "dd/MM/yyyy" : 'UTC' }}
           </span>
       </div>
       @if (!last) {
